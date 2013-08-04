@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+$:.unshift(File.expand_path('../lib', __FILE__))
+require 'poker'
+
+abort('wrong args') unless ARGV.length == 5
+hand = Poker::Hand.new(*ARGV)
+puts hand.judge
