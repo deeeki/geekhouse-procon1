@@ -1,7 +1,7 @@
 module Poker
   class Card
     MARK_HASH = {
-      'A' => 14,
+      'A' => 1,
       'K' => 13,
       'Q' => 12,
       'J' => 11,

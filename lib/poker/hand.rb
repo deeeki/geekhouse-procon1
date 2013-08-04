@@ -64,7 +64,8 @@ module Poker
     end
 
     def straight?
-      numbers.sort == straight_numbers
+      min_number = numbers.min
+      numbers.sort == [1, 10, 11, 12, 13] || numbers.sort == 5.times.map{|i| min_number + i }
     end
 
     def three_of_a_kind?
@@ -77,10 +78,6 @@ module Poker
 
     def one_pair?
       number_stats.values.include?(2)
-    end
-
-    def straight_numbers
-      5.times.map{|i| high_number - i }.reverse
     end
   end
 end
