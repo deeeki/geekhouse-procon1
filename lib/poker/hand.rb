@@ -1,6 +1,6 @@
 module Poker
   class Hand
-    attr_reader :cards, :suit_stats, :number_stats
+    attr_reader :cards
 
     def initialize *strs
       @cards = strs.map{|s| Card.new(s) }
@@ -10,18 +10,6 @@ module Poker
         @suit_stats[c.suit] = @suit_stats[c.suit] ? @suit_stats[c.suit] + 1 : 1
         @number_stats[c.number] = @number_stats[c.number] ? @number_stats[c.number] + 1 : 1
       end
-    end
-
-    def high_number
-      numbers.max
-    end
-
-    def numbers
-      @cards.map(&:number)
-    end
-
-    def suits
-      @cards.map(&:suit)
     end
 
     def judge
@@ -52,32 +40,32 @@ module Poker
     end
 
     def four_of_a_kind?
-      number_stats.values.include?(4)
+      @number_stats.values.include?(4)
     end
 
     def full_house?
-      number_stats.reject{|k, v| v == 1 }.values.sort == [2, 3]
+      @number_stats.values.sort == [2, 3]
     end
 
     def flush?
-      suit_stats.values.include?(5)
+      @suit_stats.values.include?(5)
     end
 
     def straight?
-      min_number = numbers.min
-      numbers.sort == [1, 10, 11, 12, 13] || numbers.sort == 5.times.map{|i| min_number + i }
+      numbers = @cards.map(&:number).sort
+      numbers == [1, 10, 11, 12, 13] || numbers == 5.times.map{|i| numbers.first + i }
     end
 
     def three_of_a_kind?
-      number_stats.values.include?(3)
+      @number_stats.values.include?(3)
     end
 
     def two_pair?
-      number_stats.reject{|k, v| v == 1 }.values == [2, 2]
+      @number_stats.values.sort == [1, 2, 2]
     end
 
     def one_pair?
-      number_stats.values.include?(2)
+      @number_stats.values.include?(2)
     end
   end
 end
